@@ -5,6 +5,7 @@ Enterprise-grade authentication and authorization API with JWT-based security, H
 ## 🌟 Features
 
 ### Security
+
 - **JWT Authentication**: Secure token-based authentication with Bearer tokens
 - **HMAC Verification**: Email verification codes hashed using HMAC for enhanced security
 - **Password Security**: bcrypt hashing with configurable salt rounds
@@ -13,6 +14,7 @@ Enterprise-grade authentication and authorization API with JWT-based security, H
 - **Input Validation**: Joi schemas for robust request validation
 
 ### Authentication Features
+
 - User registration with email verification
 - Secure login/logout
 - Email verification with time-limited OTP (15 minutes)
@@ -20,6 +22,7 @@ Enterprise-grade authentication and authorization API with JWT-based security, H
 - Dual authentication support (Bearer token + Cookies)
 
 ### API Features
+
 - **RESTful Design**: Clean, intuitive API endpoints
 - **Swagger Documentation**: Full OpenAPI 3.0 specification
 - **Pagination**: Built-in pagination for list endpoints
@@ -29,6 +32,7 @@ Enterprise-grade authentication and authorization API with JWT-based security, H
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js >= 22.x
 - MongoDB
 - SMTP server (for email verification)
@@ -76,6 +80,7 @@ http://localhost:8000/api-docs
 ## 🔐 API Endpoints
 
 ### Authentication
+
 - `POST /api/auth/register` - Register a new user
 - `POST /api/auth/login` - Login user
 - `POST /api/auth/logout` - Logout user (requires auth)
@@ -84,6 +89,7 @@ http://localhost:8000/api-docs
 - `PATCH /api/auth/change-password` - Change user password (requires auth)
 
 ### Posts
+
 - `POST /api/posts/create` - Create a new post (requires auth)
 - `GET /api/posts/all?page=1` - Get all posts with pagination
 
@@ -114,17 +120,21 @@ http://localhost:8000/api-docs
 ## 🔒 Security Features Explained
 
 ### HMAC Email Verification
+
 Instead of storing plain verification codes, SecureAuth uses HMAC (Hash-based Message Authentication Code) to hash the codes before storage. This means:
+
 - Even with database access, codes cannot be used
 - Codes are time-limited (15 minutes)
 - No plaintext sensitive data in the database
 
 ### Password Security
+
 - Passwords are hashed using bcrypt with 10 salt rounds
 - Passwords are never stored in plaintext
 - Password validation requires uppercase, lowercase, numbers, and special characters
 
 ### JWT Token Management
+
 - Tokens are signed with a secret key
 - Tokens include user ID, email, and username
 - Dual storage: localStorage (for client) + httpOnly cookies (for web)
@@ -132,6 +142,7 @@ Instead of storing plain verification codes, SecureAuth uses HMAC (Hash-based Me
 ## 🧪 Testing the API
 
 ### Register a New User
+
 ```bash
 curl -X POST http://localhost:8000/api/auth/register \
   -H "Content-Type: application/json" \
@@ -143,6 +154,7 @@ curl -X POST http://localhost:8000/api/auth/register \
 ```
 
 ### Login
+
 ```bash
 curl -X POST http://localhost:8000/api/auth/login \
   -H "Content-Type: application/json" \
@@ -153,6 +165,7 @@ curl -X POST http://localhost:8000/api/auth/login \
 ```
 
 ### Create a Post (Authenticated)
+
 ```bash
 curl -X POST http://localhost:8000/api/posts/create \
   -H "Content-Type: application/json" \
@@ -183,8 +196,9 @@ ISC
 ## 👨‍💻 Author
 
 **Ayomisco**
+
 - GitHub: [@Ayomisco](https://github.com/Ayomisco)
-- Email: francisayomide878@gmail.com
+- Email: fayomide324@gmail.com
 
 ## 🤝 Contributing
 
