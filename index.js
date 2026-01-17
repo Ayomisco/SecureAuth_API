@@ -13,32 +13,22 @@ const app = express();
 app.use(express.json());
 app.use(cookieparser());
 app.use(express.urlencoded({ extended: true }));
-
-// Disable Helmet for Swagger UI route
-app.use((req, res, next) => {
-    if (req.path.startsWith('/api-docs')) {
-        return next();
-    }
-    helmet({
-        contentSecurityPolicy: {
-            directives: {
-                defaultSrc: ["'self'"],
-                styleSrc: ["'self'", "'unsafe-inline'"],
-                scriptSrc: ["'self'"],
-                imgSrc: ["'self'", "data:", "https:"],
-            },
-        },
-    })(req, res, next);
-});
-
 app.use(cors());
 
-// Swagger Documentation
+// Swagger Documentation (place before Helmet to avoid CSP issues)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
     explorer: true,
     customCss: '.swagger-ui .topbar { display: none }',
     customSiteTitle: 'SecureAuth API Documentation',
 }));
+
+// Apply Helmet to all routes except Swagger
+app.use((req, res, next) => {
+    if (req.path.startsWith('/api-docs')) {
+        return next();
+    }
+    helmet()(req, res, next);
+});
 
 app.use('/api/auth', authRouter);
 app.use('/api/posts', postRouter);
