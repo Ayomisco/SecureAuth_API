@@ -14,19 +14,22 @@ app.use(express.json());
 app.use(cookieparser());
 app.use(express.urlencoded({ extended: true }));
 
-// Configure Helmet with CSP exceptions for Swagger UI
-app.use(
+// Disable Helmet for Swagger UI route
+app.use((req, res, next) => {
+    if (req.path.startsWith('/api-docs')) {
+        return next();
+    }
     helmet({
         contentSecurityPolicy: {
             directives: {
                 defaultSrc: ["'self'"],
                 styleSrc: ["'self'", "'unsafe-inline'"],
-                scriptSrc: ["'self'", "'unsafe-inline'"],
-                imgSrc: ["'self'", "data:", "https://validator.swagger.io"],
+                scriptSrc: ["'self'"],
+                imgSrc: ["'self'", "data:", "https:"],
             },
         },
-    })
-);
+    })(req, res, next);
+});
 
 app.use(cors());
 
