@@ -1,7 +1,7 @@
 {
-  "name": "auth_project",
+  "name": "secureauth-api",
   "version": "1.0.0",
-  "description": "auth system",
+  "description": "Enterprise-grade authentication and authorization API with JWT-based security, email verification using HMAC, and role-based access control",
   "main": "index.js",
   "scripts": {
     "start": "node --env-file=.env index.js",
@@ -12,9 +12,17 @@
     "url": "git+https://github.com/Ayomisco/auth_system.git"
   },
   "keywords": [
-    "auth",
-    "system",
-    "authentication"
+    "authentication",
+    "authorization",
+    "jwt",
+    "rest-api",
+    "nodejs",
+    "express",
+    "security",
+    "hmac",
+    "email-verification",
+    "bcrypt",
+    "mongodb"
   ],
   "author": "ayomisco",
   "license": "ISC",
@@ -32,6 +40,8 @@
     "joi": "^18.0.2",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.1.3",
-    "nodemailer": "^7.0.12"
+    "nodemailer": "^7.0.12",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }

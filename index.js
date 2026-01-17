@@ -3,6 +3,8 @@ const helmet = require('helmet');
 const cookieparser = require('cookie-parser');
 const cors = require('cors');
 const { connection, default: mongoose } = require('mongoose');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
 const authRouter = require('./routers/authRouter');
 const postRouter = require('./routers/postRouter');
 
@@ -15,12 +17,23 @@ app.use(helmet());
 app.use(cors());
 app.use(helmet());
 
+// Swagger Documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+    explorer: true,
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'SecureAuth API Documentation',
+}));
+
 app.use('/api/auth', authRouter);
 app.use('/api/posts', postRouter);
 
 
 app.get('/', (req, res) => {
-    res.json({ message: 'API is running...' });
+    res.json({ 
+        message: 'SecureAuth API is running...', 
+        documentation: '/api-docs',
+        version: '1.0.0'
+    });
 });
 
 // Database connection
