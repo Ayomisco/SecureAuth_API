@@ -1,15 +1,15 @@
 const express = require('express');
 
 const router = express.Router();
+const authController = require('../controllers/authController');
+const { identifier } = require('../middlewares/identification');
 
-router.post('/register', (req, res) => {
-    // Registration logic here
-    res.json({ message: 'User registered successfully' });
-});
+router.post('/register', authController.signup);
+router.post('/login', authController.login);
+router.post('/logout', identifier, authController.logout);
 
-router.post('/login', (req, res) => {
-    // Login logic here
-    res.json({ message: 'User logged in successfully' });
-});
+router.patch('/verify-email', authController.sendverificationCode);
+router.patch('/accept-verification-code', authController.verifyVerificationCode);
 
+router.patch('/change-password', identifier,  authController.changePassword);
 module.exports = router;

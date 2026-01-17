@@ -4,6 +4,7 @@ const cookieparser = require('cookie-parser');
 const cors = require('cors');
 const { connection, default: mongoose } = require('mongoose');
 const authRouter = require('./routers/authRouter');
+const postRouter = require('./routers/postRouter');
 
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(helmet());
 
 app.use('/api/auth', authRouter);
+app.use('/api/posts', postRouter);
 
 
 app.get('/', (req, res) => {
@@ -22,10 +24,7 @@ app.get('/', (req, res) => {
 });
 
 // Database connection
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => {
+mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log('Connected to MongoDB');
 }).catch((error) => {
     console.error('Database connection error:', error);
