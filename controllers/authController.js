@@ -11,7 +11,6 @@ const acceptVerificationCodeSchema = require('../middlewares/validator').acceptV
 exports.signup = async (req, res) => {
     // Signup logic here
     const { username, email, password } = req.body;
-    // You would typically add user creation logic here, e.g., saving to the database
     try {
 
         // Validate input data using the middileware schema
