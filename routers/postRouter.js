@@ -69,6 +69,9 @@ router.post('/create', identifier, postController.createPost);
  *   get:
  *     summary: Get all posts with pagination
  *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
  *     parameters:
  *       - in: query
  *         name: page
@@ -96,8 +99,139 @@ router.post('/create', identifier, postController.createPost);
  *         description: Server error
  */
 router.get('/all', identifier, postController.getAllPosts);
+
+/**
+ * @swagger
+ * /api/posts/{id}:
+ *   get:
+ *     summary: Get a post by ID
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Post ID
+ *     responses:
+ *       200:
+ *         description: Post retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   $ref: '#/components/schemas/Post'
+ *       404:
+ *         description: Post not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       401:
+ *         description: Unauthorized
+ */
 router.get('/:id',identifier, postController.getPostById);
+
+/**
+ * @swagger
+ * /api/posts/update/{id}:
+ *   patch:
+ *     summary: Update a post by ID
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Post ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 minLength: 3
+ *                 example: Updated Post Title
+ *               description:
+ *                 type: string
+ *                 minLength: 10
+ *                 example: Updated post content
+ *     responses:
+ *       200:
+ *         description: Post updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   $ref: '#/components/schemas/Post'
+ *       404:
+ *         description: Post not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       401:
+ *         description: Unauthorized
+ */
 router.patch('/update/:id', identifier, postController.updatePost);
+
+/**
+ * @swagger
+ * /api/posts/delete/{id}:
+ *   delete:
+ *     summary: Delete a post by ID
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Post ID
+ *     responses:
+ *       200:
+ *         description: Post deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       404:
+ *         description: Post not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       401:
+ *         description: Unauthorized
+ */
 router.delete('/delete/:id', identifier, postController.deletePost);
 
 module.exports = router;
